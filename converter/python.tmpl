@@ -1,0 +1,9 @@
+from ctypes import *
+
+lib = CDLL("main.so")
+{{ range $fn := . }}
+{{ if $fn.NeedReturn }}lib.{{ $fn.Name }}.restype = {{ $fn.ResType }}{{- end }}
+lib.{{ $fn.Name }}.argtypes = {{ $fn.ArgTypes }}
+def {{ $fn.Name }}({{ $fn.DefArgs }}) -> {{ $fn.DefRes }}:
+  {{ if $fn.NeedReturn }}return {{ end }}lib.{{ $fn.Name }}({{ $fn.CallArgs }}){{ if $fn.ResNeedDecode }}.decode("utf-8"){{ end }}
+{{ end }}
