@@ -51,3 +51,4 @@ lib.addDouble.restype = c_double
 lib.addDouble.argtypes = [c_double, c_double]
 def addDouble(a: float, b: float) -> float:
   return lib.addDouble(a, b)
+
